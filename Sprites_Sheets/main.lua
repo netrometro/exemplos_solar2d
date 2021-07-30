@@ -109,7 +109,7 @@ local sequences = {
   }
 }
 
-local player = display.newSprite(grupo, playerSheet, sequences)
+local player = display.newSprite(playerSheet, sequences)
 player.x = _W / 2
 player.y = _H / 2
 player:scale(5,5)
