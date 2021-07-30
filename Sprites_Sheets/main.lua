@@ -84,30 +84,73 @@ playerright:play()
 ]]--
 
 -- TERCEIRA FORMA
-local sequence = {
+
+local sequences = {
   {
     name = "down",
-    frames = { 1, 2, 3, 4 },
+    frames = { 1,2,3,4 },
     time = 1000,
   },{
     name = "up",
-    frames = { 7, 8, 9, 10 },
-    time = 1000,
-  },{
-    name = "left",
-    frames = { 13, 14, 15, 16 },
+    frames = { 7,8,9,10 },
     time = 1000,
   },{
     name = "right",
-    frames = { 19, 20, 21, 22 },
+    frames = { 13,14,15,16 },
+    time = 1000,
+  },{
+    name = "left",
+    frames = { 19,20,21,22 },
+    time = 1000,
+  },{
+    name = "idle",
+    frames = { 5,11,17,23 },
     time = 1000,
   }
 }
 
-local player = display.newSprite( playerSheet, sequence)
-player:scale(5,5)
+local player = display.newSprite(grupo, playerSheet, sequences)
 player.x = _W / 2
 player.y = _H / 2
+player:scale(5,5)
 
-player:setSequence('down')
+player:setSequence('idle')
 player:play()
+
+
+-- DETECTANDO TOQUE, MUDANDO A ANIMAÇÃO BASEADO NA DIREÇÃO DO TOQUE
+function andar(e) 
+  if (e.phase == "began") then
+    if (player.x - e.x > 0) then
+      --print("direita")
+      
+      player:setSequence('left')
+      player:play()
+    else
+      --print("esquera")
+      
+      player:setSequence('right')
+      player:play()
+    end
+    if (player.y - e.y > 0) then
+      --print("acima")
+      
+      player:setSequence('up')
+      player:play()
+    else
+      --print("abaixo")
+      
+      player:setSequence('down')
+      player:play()
+    end
+  elseif (e.phase == "moved") then
+    --print(e.x .. '    ' .. e.y)
+    --player:setSequence('down')
+    --player:play()
+  elseif (e.phase == "ended") then
+    player:setSequence('idle')
+    player:play()
+  end
+end
+
+bg:addEventListener("touch", andar)
