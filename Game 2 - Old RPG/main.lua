@@ -4,10 +4,9 @@
 --
 -----------------------------------------------------------------------------------------
 
-local _W = display.contentWidth
-local _H = display.contentHeight
 
 
+--[[
 
 local livro = {}
 
@@ -69,6 +68,11 @@ for i, v in ipairs(livro.pagina1.alternativas) do
   local img_bt = display.newRect(bt,  _W/2, _H*(linha+i)/10, 310, 30)
   img_bt:setFillColor(0,0,1)
   local txt_bt = display.newText(bt, livro.pagina1.alternativas[i], _W/2, _H*(linha+i)/10,  native.systemFont, 16) 
-  bt:addEventListener('tap', tt[livro.pagina1.destinos[i]] )
-  p1:insert(bt)
-end
+  bt:addEventListener('tap', tt[livro.pagina1.destinos[i]]-- )
+--  p1:insert(bt)
+--end
+
+local engine = require('engine')
+local pagina01 = require('pagina01')
+
+engine:criaPagina('assets/pagina1.jpg', pagina01)
